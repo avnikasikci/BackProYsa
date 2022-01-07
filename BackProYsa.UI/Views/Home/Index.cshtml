@@ -1,0 +1,135 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Ysa Donem Projesi</h1>
+        <div class="row">
+        <button type="button" onclick="callTrainFunc()" class="btn btn-primary">Call Train</button>
+        <button type="button" onclick="callRecognizeunc()" class="btn btn-primary">Call Recognize</button>
+        </div>
+    <br />
+    <br />
+    <br />
+    <br />
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="row">
+                <label class="form-label">Tahmin Edilecek Resim:</label>
+
+
+            </div>
+            <div class="row">
+                <picture>
+                    <img width="250px" height="250px" src="~/UserData/PATTERNS/0.bmp" />
+                </picture>
+
+            </div>
+            <div class="row"><input type="file"></div>
+            <br />
+            <div class="row">
+                <div class="col-md-2">
+                    <button class="btn btn-primary" type="button">Temizle</button>
+                </div>
+                <div class="col-md-2">
+
+                    <button class="btn btn-primary" type="button">Tahmin</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-sm-4 col-md-4 col-lg-4">
+                    <label class="form-label">Input Image:</label>
+                    <img src="~/UserData/PATTERNS/0.bmp" />
+
+                </div>
+                <div class="col-sm-4">
+                    <label class="form-label">Matched Hight</label>
+                    <img src="~/UserData/PATTERNS/0.bmp" />
+
+                </div>
+                <div class="col-sm-4 col-md-4">
+                    <label class="form-label">Mathed Low</label>
+                    <img src="~/UserData/PATTERNS/0.bmp" />
+
+                </div>
+                <br />
+                <br />
+                <div class="col-sm-4 col-md-4">
+                    <label class="form-label">Error:</label>
+
+                </div>
+                <div class="col-sm-4 col-md-4">
+                    <label class="form-label">Iteration:</label>
+
+                </div>
+            </div>
+        </div>
+
+    </div><!-- End: 2 Rows 1+3 Columns -->
+    <!-- Start: 1 Row 3 Columns -->
+
+</div>
+<script type="text/javascript">
+
+      //callRecognizeunc
+             function callRecognizeunc()
+             {
+         console.log("call train");
+          $.ajax({
+              type: 'POST',
+              url: '/Home/buttonRecognize_Click',
+              //contentType: 'application/x-www-form-urlencoded; charset=UTF-8', // when we use .serialize() this generates the data in query string format. this needs the default contentType (default content type is: contentType: 'application/x-www-form-urlencoded; charset=UTF-8') so it is optional, you can remove it
+              //data: data,
+              success: function (result) {
+                  alert('Successfully received Data ');
+                  console.log(result);
+              },
+              error: function () {
+                  alert('Failed to receive the Data');
+                  console.log('Failed ');
+              }
+          })
+    }
+
+     function callTrainFunc(){
+         console.log("call train");
+          $.ajax({
+              type: 'POST',
+              url: '/Home/CallTranin',
+              //contentType: 'application/x-www-form-urlencoded; charset=UTF-8', // when we use .serialize() this generates the data in query string format. this needs the default contentType (default content type is: contentType: 'application/x-www-form-urlencoded; charset=UTF-8') so it is optional, you can remove it
+              //data: data,
+              success: function (result) {
+                  alert('Successfully received Data ');
+                  console.log(result);
+              },
+              error: function () {
+                  alert('Failed to receive the Data');
+                  console.log('Failed ');
+              }
+          })
+     }
+
+      function submitStudent() {
+          var data = $("#studenteForm").serialize();
+          console.log(data);
+          alert(data);
+          $.ajax({
+              type: 'POST',
+              url: '/Home/CreateStudent',
+              contentType: 'application/x-www-form-urlencoded; charset=UTF-8', // when we use .serialize() this generates the data in query string format. this needs the default contentType (default content type is: contentType: 'application/x-www-form-urlencoded; charset=UTF-8') so it is optional, you can remove it
+              data: data,
+              success: function (result) {
+                  alert('Successfully received Data ');
+                  console.log(result);
+              },
+              error: function () {
+                  alert('Failed to receive the Data');
+                  console.log('Failed ');
+              }
+          })
+      }
+
+</script>

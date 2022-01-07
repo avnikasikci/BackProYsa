@@ -1,0 +1,121 @@
+﻿@model BackProYsa.UI.Models.SettingsViewModel
+@{
+    ViewBag.Title = "Ysa";
+}
+
+<style>
+    input[type=checkbox] {
+        /* Double-sized Checkboxes */
+        -ms-transform: scale(2); /* IE */
+        -moz-transform: scale(2); /* FF */
+        -webkit-transform: scale(2); /* Safari and Chrome */
+        -o-transform: scale(2); /* Opera */
+        transform: scale(1.5);
+        padding: 10px;
+    }
+
+    .modal-footer .btn-danger,
+    .modal-footer .btn-danger:focus {
+        line-height: 20px !important;
+        height: 25px !important;
+        padding: 0px 5px !important;
+    }
+
+    .modal-footer .btn-success,
+    .modal-footer .btn-success:focus {
+        line-height: 20px !important;
+        height: 25px !important;
+        padding: 0px 5px !important;
+    }
+
+    .modal-footer .btn-primary,
+    .modal-footer .btn-primary:focus {
+        line-height: 20px !important;
+        height: 25px !important;
+        padding: 0px 5px !important;
+    }
+</style>
+
+@*<form asp-action="Edit" asp-controller="PDKSMesai" id="myForm" enctype="multipart/form-data" class="form-horizontal" data-ajax="true" data-ajax-method="POST" data-ajax-mode="replace" data-ajax-update="#myID">*@
+
+
+@*@using (Ajax.BeginForm(null, null, new AjaxOptions { UpdateTargetId = "myID", InsertionMode = InsertionMode.Replace }, new { @id = "myForm" }))*@
+@using (Html.BeginForm(null, null, FormMethod.Post, new { @id = "myForm" }))
+
+{
+
+    <div class="text-center">
+        <h1 class="display-4">Ysa Donem Projesi</h1>
+        @*    <div class="row">
+            <button type="button" onclick="callTrainFunc()" class="btn btn-primary">Call Train</button>
+            <button type="button" onclick="callRecognizeunc()" class="btn btn-primary">Call Recognize</button>
+            </div>*@
+
+
+        <div class="row">
+            <div class="col-xs-2 control-label">
+                @*            @Html.HiddenFor(m => m.LayersCount)
+                *@
+            </div>
+        </div>
+
+        @Html.ValidationSummary()
+
+
+        <div class="row">
+            <div class="col-xs-12 ">
+                <div class="form-group">
+                    @Html.ValidationMessageFor(m => m.LayersNumber)<label for="inputemail"> Layer Number</label>
+                    @Html.TextBoxFor(i => i.LayersNumber, new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 ">
+                <div class="form-group">
+                    @Html.ValidationMessageFor(m => m.MaxErrorCount)<label for="inputemail"> Max Error:</label>
+                    @Html.TextBoxFor(i => i.MaxErrorCount, new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 ">
+                <div class="form-group">
+                    @Html.ValidationMessageFor(m => m.InputUnitCount)<label for="inputemail"> Input Count:</label>
+                    @Html.TextBoxFor(i => i.InputUnitCount, new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 ">
+                <div class="form-group">
+                    @Html.ValidationMessageFor(m => m.HiddenUnitCount)<label for="inputemail"> Hidden Input Count:</label>
+                    @Html.TextBoxFor(i => i.HiddenUnitCount, new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 ">
+                <div class="form-group">
+                    @Html.ValidationMessageFor(m => m.OutputCount)<label for="inputemail"> Output Count:</label>
+                    @Html.TextBoxFor(i => i.OutputCount, new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+
+
+
+}
+
+<script type="text/javascript">
+
+
+
+</script>

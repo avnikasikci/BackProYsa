@@ -1,0 +1,132 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@*<label>Trainin Setting</label>
+*@
+@model BackProYsa.UI.Models.TrainModel
+
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { @id = "myFormTrain" }))
+
+{
+        <h1 class="display-4">Ysa Donem Projesi</h1>
+
+    @Html.ValidationSummary()
+
+    <div class="row">
+
+        <div class="col-md-2">
+            <label>Adı</label>
+
+            <div class="form-group">
+                @Html.TextBox("Name", String.Empty, new { @class = "form-control"})
+            </div>
+        </div>
+        @*    <div class="col-md-2">
+            <label>Layer Type</label>
+
+            <div class="form-group">
+            @Html.TextBox("Spec.Name", String.Empty,  new { @class = "form-control"})
+            </div>
+            </div>
+        *@
+
+        <div class="col-md-3">
+            <div class="form-group">
+                <label>Durum:</label>
+                @Html.DropDownListFor(i => i.LayerType, Model.LayerTypeList,"Seciniz", new { @class = "form-control"})
+
+            </div>
+        </div>
+        <button type="button" onclick="submitFunc()" class="btn btn-primary">Kaydet ve Train</button>
+
+    </div>
+
+}
+
+
+
+
+<h1>Training Data</h1>
+
+<table class="table table-dark">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Adı</th>
+            <th scope="col">Layer Tip</th>
+            <th scope="col">LearningRate</th>
+            <th scope="col">InputLayerList</th>
+            <th scope="col">HiddenLayerList</th>
+            <th scope="col">OutputLayerList</th>
+            <th scope="col">PreInputLayerList</th>
+            <th scope="col">OutputNum</th>
+            <th scope="col">PreInputNum</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var _EntityData in Model.NeuralBpLayerList)
+        {
+            <tr>
+                @*                <th scope="row">@_EntityData.Id</th>
+                *@
+                <th scope="row"><button type="button" onclick="deleteFunc('@_EntityData.Id')" class="btn btn-primary">Delete</button></th>
+
+
+                <td>@_EntityData.Name</td>
+                <td>B@_EntityData.LayerType Layer</td>
+                <td>@_EntityData.LearningRate</td>
+                <td>@_EntityData.InputLayerVirtualList?.Count</td>
+                <td>@_EntityData.HiddenLayerVirtualList?.Count</td>
+                <td>@_EntityData.OutputLayerVirtualList.Count</td>
+                <td>@_EntityData.PreInputLayerVirtualList.Count</td>
+                <td>@_EntityData.OutputNum</td>
+                <td>@_EntityData.PreInputNum</td>
+            </tr>
+        }
+
+
+    </tbody>
+</table>
+
+
+<script type="text/javascript">
+    function deleteFunc(param) {
+         debugger;
+         $.ajax({
+             url: '/Train/TrainDelete/'+param,
+             //contentType: 'application/x-www-form-urlencoded; charset=UTF-8', // when we use .serialize() this generates the data in query string format. this needs the default contentType (default content type is: contentType: 'application/x-www-form-urlencoded; charset=UTF-8') so it is optional, you can remove it
+             success: function (result) {
+                 //alert('Successfully received Data ');
+                 console.log(result);
+             },
+             error: function () {
+                 //alert('Failed to receive the Data');
+                 console.log('Failed ');
+             }
+         })
+     }
+
+     function submitFunc() {
+         var data = $("#myFormTrain").serialize();
+         debugger;
+         console.log(data);
+         $.ajax({
+             type: 'POST',
+             url: '/Train/TrainSave',
+             //contentType: 'application/x-www-form-urlencoded; charset=UTF-8', // when we use .serialize() this generates the data in query string format. this needs the default contentType (default content type is: contentType: 'application/x-www-form-urlencoded; charset=UTF-8') so it is optional, you can remove it
+             data: data,
+             success: function (result) {
+                 alert('Successfully received Data ');
+                 console.log(result);
+             },
+             error: function () {
+                 alert('Failed to receive the Data');
+                 console.log('Failed ');
+             }
+         })
+     }
+
+</script>

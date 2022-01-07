@@ -1,0 +1,187 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@*<label>Trainin Setting</label>
+*@
+@model BackProYsa.UI.Models.TrainDataFileModel
+
+
+
+<form id="TrainDataFile" asp-action="Index" asp-controller="TrainData" enctype="multipart/form-data" autocomplete="off" data-ajax="true" data-ajax-method="POST">
+
+            <h1 class="display-4">Ysa Donem Projesi</h1>
+
+    @*
+        @using (Html.BeginForm(null, null, FormMethod.Post, new { @id = "myFormTrainData" }))
+
+        {*@
+    @Html.ValidationSummary()
+
+    <div class="row">
+
+        <div class="col-md-2">
+            <label>Adı</label>
+
+            <div class="form-group">
+                @Html.TextBox("Name", String.Empty, new { @class = "form-control"})
+            </div>
+        </div>
+        <div class="col-md-3">
+            <label>File</label>
+
+            <div class="form-group">
+
+                <input asp-for="FotoUpload" multiple  id="FotoUpload" style="float: left; width: 225px;" accept=".bmp" />
+            </div>
+        </div>
+        @*    <div class="col-md-2">
+            <label>Layer Type</label>
+
+            <div class="form-group">
+            @Html.TextBox("Spec.Name", String.Empty,  new { @class = "form-control"})
+            </div>
+            </div>
+        *@
+
+        @*        <div class="col-md-3">
+            <div class="form-group">
+            <label>Durum:</label>
+            @Html.DropDownListFor(i => i.LayerType, Model.LayerTypeList,"Seciniz", new { @class = "form-control"})
+
+            </div>
+            </div>*@
+        <button type="button" onclick="submitFunc()" class="btn btn-primary">Kaydet</button>
+        @*          <input type="submit" value="Submit">
+        *@
+    </div>
+
+    @*}*@
+</form>
+
+
+
+
+<h1>Training Data File</h1>
+
+<table class="table table-dark">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Adı</th>
+            <th scope="col">Dosya</th>
+            <th scope="col">Dosya</th>
+            @*            <th scope="col">LearningRate</th>
+                <th scope="col">InputLayerList</th>
+                <th scope="col">HiddenLayerList</th>
+                <th scope="col">OutputLayerList</th>
+                <th scope="col">PreInputLayerList</th>
+                <th scope="col">OutputNum</th>
+                <th scope="col">PreInputNum</th>*@
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var _EntityData in Model.DocumentList)
+        {
+            <tr>
+                @*                <th scope="row">@_EntityData.Id</th>
+                *@
+                <th scope="row"><button type="button" onclick="deleteFunc('@_EntityData.Id')" class="btn btn-primary">Delete</button></th>
+
+
+                <td>@_EntityData.Name</td>
+                <td>@_EntityData.Path</td>
+                <td>  <img src="~/UserData/PATTERNS/1_1_637771417599584307.bmp" /> </td>
+                <td>  <img src="@_EntityData.Path" /> </td>
+                @*        <td>@_EntityData.LearningRate</td>
+                    <td>@_EntityData.InputLayerVirtualList?.Count</td>
+                    <td>@_EntityData.HiddenLayerVirtualList?.Count</td>
+                    <td>@_EntityData.OutputLayerVirtualList.Count</td>
+                    <td>@_EntityData.PreInputLayerVirtualList.Count</td>
+                    <td>@_EntityData.OutputNum</td>
+                    <td>@_EntityData.PreInputNum</td>*@
+            </tr>
+        }
+
+
+    </tbody>
+</table>
+
+
+<script type="text/javascript">
+    function deleteFunc(param) {
+         debugger;
+         $.ajax({
+             url: '/TrainData/TrainDataDelete/'+param,
+             //contentType: 'application/x-www-form-urlencoded; charset=UTF-8', // when we use .serialize() this generates the data in query string format. this needs the default contentType (default content type is: contentType: 'application/x-www-form-urlencoded; charset=UTF-8') so it is optional, you can remove it
+             success: function (result) {
+                 //alert('Successfully received Data ');
+                 console.log(result);
+             },
+             error: function () {
+                 //alert('Failed to receive the Data');
+                 console.log('Failed ');
+             }
+         })
+     }
+
+     function submitFunc() {
+
+
+           debugger;
+          var data = $("#TrainDataFile").serialize();
+
+
+
+          var form = document.getElementById("TrainDataFile");
+
+              var input = document.getElementById("FotoUpload"); // Dosya yükleme işlemi olduğu için bu şekilde yükleme yapılıyor.
+              var files = input.files;
+              var formData = new FormData(form);
+
+                   for (var i = 0; i != files.length; i++) {
+                  formData.append("files", files[i]);
+                   }
+            $.ajax({
+             url: '/TrainData/Index',
+                data: formData,
+                processData: false,
+                contentType: false,
+                type: "POST",
+                //contentType: 'application/x-www-form-urlencoded; charset=UTF-8', // when we use .serialize() this generates the data in query string format. this needs the default contentType (default content type is: contentType: 'application/x-www-form-urlencoded; charset=UTF-8') so it is optional, you can remove it
+                //data: data,
+                success: function (result) {
+                    debugger;
+                    alert('Successfully received Data ');
+                    console.log(result);
+
+
+                },
+                error: function () {
+                    alert('Failed to receive the Data');
+                    console.log('Failed ');
+                }
+            })
+
+
+         //var data = $("#myFormTrainData").serialize();
+         //debugger;
+         //console.log(data);
+         //$.ajax({
+         //    type: 'POST',
+         //    url: '/TrainData/TrainDataSave',
+         //    //contentType: 'application/x-www-form-urlencoded; charset=UTF-8', // when we use .serialize() this generates the data in query string format. this needs the default contentType (default content type is: contentType: 'application/x-www-form-urlencoded; charset=UTF-8') so it is optional, you can remove it
+         //    data: data,
+         //    success: function (result) {
+         //        alert('Successfully received Data ');
+         //        console.log(result);
+         //    },
+         //    error: function () {
+         //        alert('Failed to receive the Data');
+         //        console.log('Failed ');
+         //    }
+         //})
+     }
+
+</script>
